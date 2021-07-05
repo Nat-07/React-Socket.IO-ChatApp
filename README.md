@@ -30,9 +30,9 @@ yarn build / npm build
 
 ### Deployment &nbsp; :package:
 
-The active [example](instant-chatapp-react-socketio.herokuapp.com/) is deployed using [Heroku](https://www.heroku.com/).For more information visit their [documentation](https://devcenter.heroku.com/categories/deployment) to learn how to deploy
+The active [example](https://instant-chatapp-react-socketio.herokuapp.com/) is deployed using [Heroku](https://www.heroku.com/).For more information visit their [documentation](https://devcenter.heroku.com/categories/deployment) to learn how to deploy
 
-**Note:** Varying approaches could be taken. Ie, deploying the front end and back end individually + using CORS. The active [example](instant-chatapp-react-socketio.herokuapp.com/) dishes the built html as well as socketio server.
+**Note:** Varying approaches could be taken. Ie, deploying the front end and back end individually + using CORS. The active [example](https://instant-chatapp-react-socketio.herokuapp.com/) dishes the built html as well as socketio server.
 
 ### Tech Stack &nbsp; :toolbox:
 

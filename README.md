@@ -1,1 +1,1 @@
-React Socket.IO ChatApp
+React Chat App

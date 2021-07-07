@@ -51,10 +51,16 @@ io.on("connection", (socket) => {
     socket.on("disconnect", () => {
         console.clear();
 
-        const oldUserOBJ = {
-            id: socket.id,
-            name: socket.id,
-        };
+        // get user's info
+        var oldUserOBJ;
+        listSocketID.forEach((users) => {
+            if (users.id === socket.id) {
+                oldUserOBJ = {
+                    id: socket.id,
+                    name: users.name,
+                };
+            }
+        });
 
         // Emit to all users
         io.emit("user-disconnected", oldUserOBJ);

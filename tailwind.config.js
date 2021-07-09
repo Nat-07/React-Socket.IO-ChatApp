@@ -8,6 +8,10 @@ module.exports = {
                 // custom colors
                 darkModeMain: "#15294D",
                 darkModeHeadFoot: "#355069",
+                divideLine: "#27435c",
+            },
+            zIndex: {
+                9999: "999",
             },
         },
     },

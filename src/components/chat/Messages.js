@@ -1,6 +1,6 @@
 export default function Messages({ messagesOBJ }) {
     return (
-        <div className="mb-10 ">
+        <div className="mt-6 mb-10 ">
             {messagesOBJ.map((singleMessage, index) => {
                 // deconstruct single message in whole OBJ
                 const { name, messageText, currentTime, joined, left, isSelf } =

@@ -3,11 +3,10 @@ import io from "socket.io-client";
 import NewMessageForm from "./NewMessage";
 import Messages from "./Messages";
 import queryString from "query-string";
-import { ThemeToggle } from "../darkMode";
 import { CurrentUsersData, receivedMessage, currentTime } from "./helper";
 
-export default function ChatMain({ location }) {
-    // saved data
+export default function ChatMain(location) {
+    //  data
     const [myInfo, setMyInfo] = useState({});
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
@@ -103,11 +102,8 @@ export default function ChatMain({ location }) {
         // main chat screen
         <div className="h-full min-h-screen overflow-x-hidden transition duration-75 bg-white h-fixed dark:bg-darkModeMain">
             {/* Header */}
-            <div className="fixed inset-x-0 top-0 grid grid-cols-3 py-2 bg-gray-100 z-9999 dark:bg-darkModeHeadFoot dark:text-white dark:outline">
-                <div className="col-span-1"></div>
+            <div className="fixed inset-x-0 top-0 flex justify-center py-2 bg-gray-100 z-500 dark:bg-darkModeHeadFoot dark:text-white dark:outline">
                 <CurrentUsersData numCurrentUsers={numCurrentUsers} />
-
-                <ThemeToggle />
             </div>
             {/* Middle w/ messages */}
             <div className="p-1">

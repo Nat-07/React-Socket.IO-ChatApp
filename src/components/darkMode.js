@@ -16,12 +16,40 @@ export default function DarkModeComp() {
 }
 
 // Changing dark/light svg
-export function ThemeToggle() {
+export function ThemeToggle({ isBase, setIsBase }, location) {
     const [colorTheme, setTheme] = DarkModeComp();
+
     return (
         <div
-            onClick={() => setTheme(colorTheme)}
-            className="mr-5 justify-self-end"
+            // animation when clicked
+            id="div-toggle"
+            onClick={() => {
+                setTheme(colorTheme);
+
+                const elem = document.getElementById("div-toggle").classList;
+
+                if (isBase) {
+                    elem.add("animate-customAnimation");
+
+                    setTimeout(function () {
+                        elem.remove("animate-customAnimation");
+                    }, 1500);
+                    setIsBase(!isBase);
+                } else {
+                    elem.add("animate-customAnimation");
+
+                    setTimeout(function () {
+                        elem.remove("animate-customAnimation");
+                    }, 1500);
+                    setIsBase(!isBase);
+                }
+            }}
+            // Conditional fixed toggle
+            className={
+                window.location.href.includes("/about")
+                    ? " z-999"
+                    : "fixed z-999"
+            }
         >
             {colorTheme === "light" ? (
                 <svg
@@ -41,7 +69,6 @@ export function ThemeToggle() {
                 </svg>
             ) : (
                 <svg
-                    className=""
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 122.88 122.88"
                     height="28px"

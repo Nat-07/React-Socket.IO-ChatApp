@@ -2,7 +2,7 @@ export default function AboutInfo() {
     return (
         <div>
             <div className="min-h-screen pb-4 subpixel-antialiased dark:bg-darkModeMain">
-                <div className="px-2 py-3 mx-4 space-y-3 divide-y rounded-lg shadow-lg dark:text-gray-200 bg-gray-50 dark:bg-darkModeHeadFoot ">
+                <div className="px-2 mx-4 space-y-3 divide-y rounded-lg shadow-lg dark:text-gray-200 bg-gray-50 dark:bg-darkModeHeadFoot ">
                     <p className="flex justify-center pb-1 font-sans text-2xl font-medium dark:text-white ">
                         About
                     </p>

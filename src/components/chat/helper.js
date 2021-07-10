@@ -1,5 +1,3 @@
-import DarkModeComp from "../darkMode";
-
 // user send and receive message
 function receivedMessage(newMessage, setMessages) {
     setMessages((oldMsgs) => [...oldMsgs, newMessage]);

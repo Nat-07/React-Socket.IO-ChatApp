@@ -24,7 +24,13 @@ module.exports = {
         },
     },
     variants: {
-        extend: {},
+        extend: {
+            backgroundColor: ["disabled"],
+            ringOffsetColor: ["disabled"],
+            animation: ["disabled"],
+            ringWidth: ["disabled"],
+            ringOffsetWidth: ["disabled"],
+        },
     },
     plugins: [],
 };

@@ -16,7 +16,7 @@ export default function DarkModeComp() {
 }
 
 // Changing dark/light svg
-export function ThemeToggle({ isBase, setIsBase }, location) {
+export function ThemeToggle({ isBase, setIsBase }) {
     const [colorTheme, setTheme] = DarkModeComp();
 
     return (
@@ -33,23 +33,18 @@ export function ThemeToggle({ isBase, setIsBase }, location) {
 
                     setTimeout(function () {
                         elem.remove("animate-customAnimation");
-                    }, 1500);
+                    }, 1000);
                     setIsBase(!isBase);
                 } else {
                     elem.add("animate-customAnimation");
 
                     setTimeout(function () {
                         elem.remove("animate-customAnimation");
-                    }, 1500);
+                    }, 1000);
                     setIsBase(!isBase);
                 }
             }}
             // Conditional fixed toggle
-            className={
-                window.location.href.includes("/about")
-                    ? " z-999"
-                    : "fixed z-999"
-            }
         >
             {colorTheme === "light" ? (
                 <svg

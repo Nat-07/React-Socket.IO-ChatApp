@@ -4,8 +4,9 @@ import NewMessageForm from "./NewMessage";
 import Messages from "./Messages";
 import queryString from "query-string";
 import { CurrentUsersData, receivedMessage, currentTime } from "./helper";
+import { ThemeToggle } from "../darkMode";
 
-export default function ChatMain(location) {
+export default function ChatMain({ isBase, setIsBase }, location) {
     //  data
     const [myInfo, setMyInfo] = useState({});
     const [messages, setMessages] = useState([]);
@@ -102,8 +103,15 @@ export default function ChatMain(location) {
         // main chat screen
         <div className="h-full min-h-screen overflow-x-hidden transition duration-75 bg-white h-fixed dark:bg-darkModeMain">
             {/* Header */}
-            <div className="fixed inset-x-0 top-0 flex justify-center py-2 bg-gray-100 z-500 dark:bg-darkModeHeadFoot dark:text-white dark:outline">
-                <CurrentUsersData numCurrentUsers={numCurrentUsers} />
+            <div className="fixed inset-x-0 top-0 grid grid-cols-3 py-2 bg-gray-100 z-500 dark:bg-darkModeHeadFoot dark:text-white dark:outline">
+                <div className="col-span-1" />
+                <div className="col-span-1 justify-self-center">
+                    <CurrentUsersData numCurrentUsers={numCurrentUsers} />
+                </div>
+
+                <div className="col-span-1 mr-3 justify-self-end">
+                    <ThemeToggle isBase={isBase} setIsBase={setIsBase} />
+                </div>
             </div>
             {/* Middle w/ messages */}
             <div className="p-1">

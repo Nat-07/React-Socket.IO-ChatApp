@@ -5,25 +5,36 @@ import ChatMain from "./components/chat/chat";
 import Login from "./components/login/login";
 import AboutInfo from "./components/about/about";
 import Error from "./components/errorPage/errorPage";
-import { ThemeToggle } from "./components/darkMode";
 
 export default function App() {
     const [isBase, setIsBase] = useState(true);
+
     return (
         <BrowserRouter>
-            {/* Always top of page */}
-            <div className="flex justify-end py-2 pr-3 dark: dark:bg-darkModeMain">
-                <ThemeToggle isBase={isBase} setIsBase={setIsBase} />
+            <div className="dark:bg-darkModeMain">
+                {/* Always top of page */}
+
+                <Switch>
+                    {/* main page */}
+                    <Route exact path="/">
+                        <Login isBase={isBase} setIsBase={setIsBase} />
+                    </Route>
+
+                    {/* chat-room */}
+                    <Route path="/chat">
+                        <ChatMain isBase={isBase} setIsBase={setIsBase} />
+                    </Route>
+
+                    {/* about page */}
+                    <Route exact path="/about">
+                        <AboutInfo isBase={isBase} setIsBase={setIsBase} />
+                    </Route>
+
+                    <Route>
+                        <Error isBase={isBase} setIsBase={setIsBase} />
+                    </Route>
+                </Switch>
             </div>
-            <Switch>
-                {/* main page */}
-                <Route exact path="/" component={Login} />
-                {/* chat-room */}
-                <Route path="/chat" component={ChatMain} />
-                {/* about page */}
-                <Route path="/about" component={AboutInfo} />
-                <Route component={Error} />
-            </Switch>
         </BrowserRouter>
     );
 }

@@ -71,7 +71,7 @@ export default function AboutInfo({ isBase, setIsBase }) {
                     <p>
                         This instance of The Chat-App is hosted on Heroku where
                         the Nodejs server sends all clients a full html file of
-                        all pages of this site.
+                        all pages on this site.
                     </p>
                 </div>
                 <div>

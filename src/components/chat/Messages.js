@@ -1,4 +1,6 @@
-export default function Messages({ messagesOBJ }) {
+export default function Messages({ messagesOBJ, numMyMessages }) {
+    let localCount = 0;
+
     return (
         <div className="mb-10 mt-11 ">
             {messagesOBJ.map((singleMessage, index) => {
@@ -14,7 +16,7 @@ export default function Messages({ messagesOBJ }) {
                         >
                             <p className="font-bold">{name}</p>
                             <p className="font-sans subpixel-antialiased font-normal">
-                                &nbsp;has joined
+                                &nbsp; has joined
                             </p>
                         </div>
                     );
@@ -27,25 +29,80 @@ export default function Messages({ messagesOBJ }) {
                         >
                             <p className="font-bold">{name}</p>
                             <p className="font-sans subpixel-antialiased font-normal">
-                                &nbsp;has disconnected
+                                &nbsp; has disconnected
                             </p>
                         </div>
                     );
-                } else {
+                } else if (isSelf) {
+                    localCount++;
                     // If self or other user message
-                    return isSelf ? (
-                        <div className="flex justify-end" key={index}>
-                            <div>
-                                <p className="px-2 break-words font-sans subpixel-antialiased ml-32 py-1.5 p-2 my-1 text-sm bg-blue-300 rounded-lg shadow-md dark:bg-blue-400">
-                                    {messageText}
-                                </p>
 
-                                <p className="flex justify-end -mt-5 subpixel-antialiased font-bold text-blue-300 dark:text-blue-400">
-                                    &lt;
-                                </p>
+                    if (numMyMessages === localCount) {
+                        return (
+                            <div key={index}>
+                                <div className="flex justify-end">
+                                    <div>
+                                        <p className="px-2 break-words font-sans subpixel-antialiased ml-32 py-1.5 p-2 my-1 text-sm bg-blue-300 rounded-lg shadow-md dark:bg-blue-400">
+                                            {messageText}
+                                        </p>
+
+                                        <p className="flex justify-end -mt-5 subpixel-antialiased font-bold text-blue-300 dark:text-blue-400">
+                                            &lt;
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div className="flex justify-end -mt-1 text-black dark:text-white">
+                                    <svg
+                                        id="sent-successfully-svg"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20"
+                                        fill="currentColor"
+                                        width="15px"
+                                        height="15px"
+                                        className="animate-customMyMessagePulse"
+                                        // Allow Animation
+                                        onLoad={() => {
+                                            const elem =
+                                                document.getElementById(
+                                                    "sent-successfully-svg"
+                                                ).classList;
+
+                                            setTimeout(function () {
+                                                elem.remove(
+                                                    "animate-customMyMessagePulse"
+                                                );
+                                            }, 1500);
+                                        }}
+                                    >
+                                        <path
+                                            fillRule="evenodd"
+                                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                            clipRule="evenodd"
+                                        />
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
-                    ) : (
+                        );
+                    } else {
+                        return (
+                            <div key={index}>
+                                <div className="flex justify-end">
+                                    <div>
+                                        <p className="px-2 break-words font-sans subpixel-antialiased ml-32 py-1.5 p-2 my-1 text-sm bg-blue-300 rounded-lg shadow-md dark:bg-blue-400">
+                                            {messageText}
+                                        </p>
+
+                                        <p className="flex justify-end -mt-5 subpixel-antialiased font-bold text-blue-300 dark:text-blue-400">
+                                            &lt;
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    }
+                } else {
+                    return (
                         <div className="flex justify-start" key={index}>
                             <div>
                                 <p className="p-2 my-1 mr-32 font-sans text-sm subpixel-antialiased break-words bg-gray-200 rounded-lg shadow-sm dark:shadow-lg dark:bg-gray-300 ">{`${currentTime}: ${name}: ${messageText}`}</p>

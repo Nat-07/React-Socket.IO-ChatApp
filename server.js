@@ -45,6 +45,23 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("new-message-from-server", props);
     });
 
+    socket.on("received", () => {
+        io.to(socket.id).emit("server-received");
+        console.log("server got info");
+    });
+
+    socket.on("time-out", ({ year, month, day, hours, min, sec, millisec }) => {
+        const datePassed = new Date(
+            year,
+            month,
+            day,
+            hours,
+            min,
+            sec,
+            millisec
+        );
+    });
+
     // user disconnects
     socket.on("disconnect", () => {
         console.clear();

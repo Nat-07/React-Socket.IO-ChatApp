@@ -2,25 +2,29 @@ import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import NewMessageForm from "./NewMessage";
 import Messages from "./Messages";
-import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import { CurrentUsersData, receivedMessage, currentTime } from "./helper";
 import { ThemeToggle } from "../darkMode";
 
-export default function ChatMain({ isBase, setIsBase }, location) {
+export default function ChatMain({ location, isBase, setIsBase }) {
     //  data
     const [myInfo, setMyInfo] = useState({});
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [numCurrentUsers, setCurrentUsers] = useState([]);
+    // const [delivered, setDelivered] = useState(false);
+    const [numMyMessages, setNumMyMessages] = useState(0);
 
     const socketRef = useRef();
+
+    // get name
+    const name = new URLSearchParams(useLocation().search).get("name");
 
     useEffect(() => {
         //create connection with server
         socketRef.current = io.connect("/");
 
-        // get name and send
-        const { name } = queryString.parse(location.search);
+        // send name
         socketRef.current.emit("announce-name", name);
 
         // Get & save id
@@ -62,6 +66,10 @@ export default function ChatMain({ isBase, setIsBase }, location) {
             receivedMessage(leftUserOBJ, setMessages);
         });
 
+        // socketRef.current.on("server-received", () => {
+        //     setDelivered(true);
+        // });
+
         // receive new message
         socketRef.current.on(
             "new-message-from-server",
@@ -90,6 +98,7 @@ export default function ChatMain({ isBase, setIsBase }, location) {
             left: false,
             isSelf: true,
         };
+        setNumMyMessages(numMyMessages + 1);
 
         // send to server
         socketRef.current.emit("new-message-to-server", messageObject);
@@ -97,6 +106,8 @@ export default function ChatMain({ isBase, setIsBase }, location) {
         receivedMessage(messageObject, setMessages);
         // clear state var
         setMessage("");
+
+        socketRef.current.emit("received");
     }
 
     return (
@@ -115,7 +126,10 @@ export default function ChatMain({ isBase, setIsBase }, location) {
             </div>
             {/* Middle w/ messages */}
             <div className="p-1">
-                <Messages messagesOBJ={messages} clientID={myInfo.id} />
+                <Messages
+                    messagesOBJ={messages}
+                    numMyMessages={numMyMessages}
+                />
             </div>
             {/* Footer */}
             <div>

@@ -12,8 +12,6 @@ export default function App() {
     return (
         <BrowserRouter>
             <div className="dark:bg-darkModeMain">
-                {/* Always top of page */}
-
                 <Switch>
                     {/* main page */}
                     <Route exact path="/">
@@ -26,11 +24,11 @@ export default function App() {
                     </Route>
 
                     {/* about page */}
-                    <Route exact path="/about">
+                    <Route path="/about">
                         <AboutInfo isBase={isBase} setIsBase={setIsBase} />
                     </Route>
 
-                    <Route>
+                    <Route path="/temp">
                         <Error isBase={isBase} setIsBase={setIsBase} />
                     </Route>
                 </Switch>

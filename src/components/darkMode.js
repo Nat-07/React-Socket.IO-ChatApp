@@ -29,17 +29,17 @@ export function ThemeToggle({ isBase, setIsBase }) {
                 const elem = document.getElementById("div-toggle").classList;
 
                 if (isBase) {
-                    elem.add("animate-customAnimation");
+                    elem.add("animate-lightDarkToggle");
 
                     setTimeout(function () {
-                        elem.remove("animate-customAnimation");
+                        elem.remove("animate-lightDarkToggle");
                     }, 1000);
                     setIsBase(!isBase);
                 } else {
-                    elem.add("animate-customAnimation");
+                    elem.add("animate-lightDarkToggle");
 
                     setTimeout(function () {
-                        elem.remove("animate-customAnimation");
+                        elem.remove("animate-lightDarkToggle");
                     }, 1000);
                     setIsBase(!isBase);
                 }

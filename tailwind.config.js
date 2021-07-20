@@ -19,7 +19,9 @@ module.exports = {
             },
             // Animation for dark/light icon
             animation: {
-                customAnimation: "spin 1s",
+                lightDarkToggle: "spin 1s",
+                customOnlinePing: "ping 1.25s infinite",
+                customMyMessagePulse: "pulse 1.5s",
             },
         },
     },

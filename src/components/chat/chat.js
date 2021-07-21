@@ -20,7 +20,7 @@ export default function ChatMain({ isBase, setIsBase }) {
     const name = new URLSearchParams(useLocation().search).get("name");
 
     useEffect(() => {
-        //create connection with server
+        //create socketio connection
         socketRef.current = io.connect("/");
 
         // send name
@@ -66,7 +66,7 @@ export default function ChatMain({ isBase, setIsBase }) {
 
         // receive new message
         socketRef.current.on(
-            "new-message-from-server",
+            "new-message-FS",
             ({ name, messageText, currentTime, joined, left }) => {
                 const newMessage = {
                     name: name,
@@ -81,7 +81,7 @@ export default function ChatMain({ isBase, setIsBase }) {
         );
     }, [name]);
 
-    // self-user send message
+    // send message
     function sendMessage(message) {
         const messageObject = {
             id: myInfo.id,
@@ -92,13 +92,13 @@ export default function ChatMain({ isBase, setIsBase }) {
             left: false,
             isSelf: true,
         };
+
         setNumMyMessages(numMyMessages + 1);
 
-        // send to server
-        socketRef.current.emit("new-message-to-server", messageObject);
-        // Show on screen
+        // send server
+        socketRef.current.emit("new-message-TS", messageObject);
+
         receivedMessage(messageObject, setMessages);
-        // clear state var
         setMessage("");
     }
 

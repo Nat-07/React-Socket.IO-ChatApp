@@ -4,16 +4,17 @@ const http = require("http");
 const server = http.createServer(app);
 const socket = require("socket.io");
 const path = require("path");
+require("dotenv").config();
 
 // config
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 const io = socket(server, {
-    pingInterval: 1000,
-    pingTimeout: 1000,
+    pingInterval: process.env.PING_INTERVAL,
+    pingTimeout: process.env.PING_TIMEOUT,
 });
 
 // list of current users
-let listSocketID = [];
+let currentUsers = [];
 
 // on connect
 io.on("connection", (socket) => {
@@ -31,12 +32,15 @@ io.on("connection", (socket) => {
         io.to(socket.id).emit("your-info", socket.id);
 
         // add client to current users
-        listSocketID.push(newUserOBJ);
-        console.log(listSocketID);
+        currentUsers.push(newUserOBJ);
+        console.log(currentUsers);
 
-        // notify of new user
-        io.emit("number-users", listSocketID.length);
-        socket.broadcast.emit("alert-of-new-user", name);
+        io.emit("alert-enter-leave", {
+            name: name,
+            currentUsers: currentUsers.length,
+            joined: true,
+            left: false,
+        });
     });
 
     // user sends message to server
@@ -45,45 +49,30 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("new-message-from-server", props);
     });
 
-    socket.on("received", () => {
-        io.to(socket.id).emit("server-received");
-        console.log("server got info");
-    });
-
-    socket.on("time-out", ({ year, month, day, hours, min, sec, millisec }) => {
-        const datePassed = new Date(
-            year,
-            month,
-            day,
-            hours,
-            min,
-            sec,
-            millisec
-        );
-    });
-
     // user disconnects
     socket.on("disconnect", () => {
         console.clear();
 
         // get user's info
         var name;
-        listSocketID.forEach((users) => {
+        currentUsers.forEach((users) => {
             if (users.id === socket.id) {
                 name = users.name;
             }
         });
 
-        // Emit to all users
-        io.emit("user-disconnected", name);
-
-        // delete user id from list
-        listSocketID.splice(listSocketID.indexOf(socket.id), 1);
+        // delete user from current list
+        currentUsers.splice(currentUsers.indexOf(socket.id), 1);
 
         // log current users
-        console.log(listSocketID);
+        console.log(currentUsers);
 
-        io.emit("number-users", listSocketID.length);
+        io.emit("alert-enter-leave", {
+            name: name,
+            currentUsers: currentUsers.length,
+            joined: false,
+            left: true,
+        });
     });
 });
 

@@ -6,13 +6,12 @@ import { useLocation } from "react-router-dom";
 import { CurrentUsersData, receivedMessage, currentTime } from "./helper";
 import { ThemeToggle } from "../darkMode";
 
-export default function ChatMain({ location, isBase, setIsBase }) {
+export default function ChatMain({ isBase, setIsBase }) {
     //  data
     const [myInfo, setMyInfo] = useState({});
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
-    const [numCurrentUsers, setCurrentUsers] = useState([]);
-    // const [delivered, setDelivered] = useState(false);
+    const [numCurrentUsers, setCurrentUsers] = useState(0);
     const [numMyMessages, setNumMyMessages] = useState(0);
 
     const socketRef = useRef();
@@ -36,39 +35,34 @@ export default function ChatMain({ location, isBase, setIsBase }) {
         });
 
         // user join message
-        socketRef.current.on("alert-of-new-user", (name) => {
-            const joinUserOBJ = {
-                name: name,
-                messageText: null,
-                currentTime: currentTime(),
-                joined: true,
-                left: false,
-                isSelf: false,
-            };
-            receivedMessage(joinUserOBJ, setMessages);
-        });
-
-        // receive num users
-        socketRef.current.on("number-users", (numberOfUsers) => {
-            setCurrentUsers(numberOfUsers);
-        });
-
-        // receive user disconnects
-        socketRef.current.on("user-disconnected", (name) => {
-            const leftUserOBJ = {
-                name: name,
-                messageText: null,
-                currentTime: null,
-                joined: false,
-                left: true,
-                isSelf: false,
-            };
-            receivedMessage(leftUserOBJ, setMessages);
-        });
-
-        // socketRef.current.on("server-received", () => {
-        //     setDelivered(true);
-        // });
+        socketRef.current.on(
+            "alert-enter-leave",
+            ({ name, currentUsers, joined, left }) => {
+                if (joined) {
+                    const joinUserOBJ = {
+                        name: name,
+                        messageText: null,
+                        currentTime: currentTime(),
+                        joined: joined,
+                        left: left,
+                        isSelf: false,
+                    };
+                    receivedMessage(joinUserOBJ, setMessages);
+                    setCurrentUsers(currentUsers);
+                } else {
+                    const leftUserOBJ = {
+                        name: name,
+                        messageText: null,
+                        currentTime: null,
+                        joined: joined,
+                        left: left,
+                        isSelf: false,
+                    };
+                    receivedMessage(leftUserOBJ, setMessages);
+                    setCurrentUsers(currentUsers);
+                }
+            }
+        );
 
         // receive new message
         socketRef.current.on(
@@ -85,7 +79,7 @@ export default function ChatMain({ location, isBase, setIsBase }) {
                 receivedMessage(newMessage, setMessages);
             }
         );
-    }, []);
+    }, [name]);
 
     // self-user send message
     function sendMessage(message) {
@@ -106,8 +100,6 @@ export default function ChatMain({ location, isBase, setIsBase }) {
         receivedMessage(messageObject, setMessages);
         // clear state var
         setMessage("");
-
-        socketRef.current.emit("received");
     }
 
     return (
@@ -129,6 +121,7 @@ export default function ChatMain({ location, isBase, setIsBase }) {
                 <Messages
                     messagesOBJ={messages}
                     numMyMessages={numMyMessages}
+                    myName={myInfo.name}
                 />
             </div>
             {/* Footer */}

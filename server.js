@@ -18,7 +18,6 @@ let currentUsers = [];
 
 // on connect
 io.on("connection", (socket) => {
-    // when user announce connection
     socket.on("announce-name", (name) => {
         console.clear();
         console.log("New user joined: " + name);
@@ -28,7 +27,7 @@ io.on("connection", (socket) => {
             id: socket.id,
         };
 
-        // send client their id
+        // send client id
         io.to(socket.id).emit("your-info", socket.id);
 
         // add client to current users
@@ -43,10 +42,9 @@ io.on("connection", (socket) => {
         });
     });
 
-    // user sends message to server
-    socket.on("new-message-to-server", (props) => {
-        // Send to all but one who sent
-        socket.broadcast.emit("new-message-from-server", props);
+    socket.on("new-message-TS", (props) => {
+        // Send to all minus sender
+        socket.broadcast.emit("new-message-FS", props);
     });
 
     // user disconnects
@@ -76,7 +74,7 @@ io.on("connection", (socket) => {
     });
 });
 
-// static files and html (not used in dev)
+// html & static (used in prod)
 app.use(express.static(path.join(__dirname, "/build/")));
 app.get("/", function (request, response) {
     response.sendFile(__dirname + "/build/index.html");

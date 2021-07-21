@@ -1,5 +1,17 @@
-export default function Messages({ messagesOBJ, numMyMessages }) {
+import { useRef, useEffect } from "react";
+export default function Messages({ messagesOBJ, numMyMessages, myName }) {
     let localCount = 0;
+
+    // https://stackoverflow.com/a/52266212
+    const newMessages = useRef(null);
+    const scrollToBottom = () => {
+        newMessages.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    // when messagesOBJ changes
+    useEffect(() => {
+        scrollToBottom();
+    }, [messagesOBJ]);
 
     return (
         <div className="mb-10 mt-11 ">
@@ -8,16 +20,23 @@ export default function Messages({ messagesOBJ, numMyMessages }) {
                 const { name, messageText, currentTime, joined, left, isSelf } =
                     singleMessage;
                 // new user join
+
                 if (joined) {
                     return (
                         <div
                             key={index}
                             className="flex break-words mx-3 justify-center px-2 py-1 my-0.5 text-sm text-white bg-green-400 opacity-90 rounded-lg shadow-sm"
                         >
-                            <p className="font-bold">{name}</p>
-                            <p className="font-sans subpixel-antialiased font-normal">
-                                &nbsp; has joined
-                            </p>
+                            {name === myName ? (
+                                <p className="font-bold">Successfully joined</p>
+                            ) : (
+                                <p className="font-bold">
+                                    {name}{" "}
+                                    <span className="font-sans subpixel-antialiased font-normal">
+                                        has joined
+                                    </span>
+                                </p>
+                            )}
                         </div>
                     );
                     // user left
@@ -114,6 +133,8 @@ export default function Messages({ messagesOBJ, numMyMessages }) {
                     );
                 }
             })}
+            {/* Dummy div to scroll to */}
+            <div ref={newMessages}></div>
         </div>
     );
 }

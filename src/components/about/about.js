@@ -1,11 +1,15 @@
 import { ThemeToggle } from "../darkMode";
+import HomeButton from "../homeButton";
 
 export default function AboutInfo({ isBase, setIsBase }) {
     return (
         <div className="min-h-screen pt-4 pb-5 subpixel-antialiased dark:bg-darkModeMain">
             <div className="px-2 pb-1 mx-4 space-y-3 divide-y rounded-lg shadow-lg dark:text-gray-200 bg-gray-50 dark:bg-darkModeHeadFoot ">
                 <div className="grid grid-cols-3">
-                    <div className="col-span-1 "></div>
+                    <div className="col-span-1 pt-2 pl-3 mb-2 justify-self-start">
+                        <HomeButton />
+                    </div>
+
                     <p className="col-span-1 py-2 font-sans text-2xl font-medium justify-self-center dark:text-white">
                         About
                     </p>

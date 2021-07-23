@@ -7,10 +7,10 @@ const path = require("path");
 require("dotenv").config();
 
 // config
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.SERVER_PORT || 5000;
 const io = socket(server, {
-    pingInterval: process.env.PING_INTERVAL,
-    pingTimeout: process.env.PING_TIMEOUT,
+    pingInterval: process.env.PING_INTERVAL || 1000,
+    pingTimeout: process.env.PING_TIMEOUT || 1000,
 });
 
 // list of current users
@@ -47,6 +47,17 @@ io.on("connection", (socket) => {
         socket.broadcast.emit("new-message-FS", props);
     });
 
+    // respond with users online
+    socket.on("req-who-online", () => {
+        const currentNames = [];
+        console.log("run");
+        currentUsers.forEach((singleUser) => {
+            currentNames.push(singleUser.name);
+        });
+
+        io.to(socket.id).emit("who-online-res", currentNames);
+    });
+
     // user disconnects
     socket.on("disconnect", () => {
         console.clear();
@@ -76,6 +87,7 @@ io.on("connection", (socket) => {
 
 // html & static (used in prod)
 app.use(express.static(path.join(__dirname, "/build/")));
+
 app.get("/", function (request, response) {
     response.sendFile(__dirname + "/build/index.html");
 });

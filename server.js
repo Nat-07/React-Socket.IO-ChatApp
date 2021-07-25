@@ -7,7 +7,7 @@ const path = require("path");
 require("dotenv").config();
 
 // config
-const PORT = process.env.SERVER_PORT || 5000;
+const PORT = process.env.PORT || 5000;
 const io = socket(server, {
     pingInterval: process.env.PING_INTERVAL || 1000,
     pingTimeout: process.env.PING_TIMEOUT || 1000,
@@ -50,7 +50,6 @@ io.on("connection", (socket) => {
     // respond with users online
     socket.on("req-who-online", () => {
         const currentNames = [];
-        console.log("run");
         currentUsers.forEach((singleUser) => {
             currentNames.push(singleUser.name);
         });

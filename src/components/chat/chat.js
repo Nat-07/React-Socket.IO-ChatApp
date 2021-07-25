@@ -3,8 +3,14 @@ import io from "socket.io-client";
 import NewMessageForm from "./NewMessage";
 import Messages from "./Messages";
 import { useLocation } from "react-router-dom";
-import { CurrentUsersData, receivedMessage, currentTime } from "./helper";
+import {
+    CurrentUsersData,
+    receivedMessage,
+    currentTime,
+    DisplayOnline,
+} from "./helper";
 import { ThemeToggle } from "../darkMode";
+import HomeButton from "../homeButton";
 
 export default function ChatMain({ isBase, setIsBase }) {
     //  data
@@ -13,6 +19,8 @@ export default function ChatMain({ isBase, setIsBase }) {
     const [message, setMessage] = useState("");
     const [numCurrentUsers, setCurrentUsers] = useState(0);
     const [numMyMessages, setNumMyMessages] = useState(0);
+    const [onlineNames, setOnlineNames] = useState([]);
+    const [showNames, setShowNames] = useState(false);
 
     const socketRef = useRef();
 
@@ -20,7 +28,7 @@ export default function ChatMain({ isBase, setIsBase }) {
     const name = new URLSearchParams(useLocation().search).get("name");
 
     useEffect(() => {
-        //create socketio connection
+        //socketio connection
         socketRef.current = io.connect("/");
 
         // send name
@@ -34,7 +42,7 @@ export default function ChatMain({ isBase, setIsBase }) {
             });
         });
 
-        // user join message
+        // user join/leave message
         socketRef.current.on(
             "alert-enter-leave",
             ({ name, currentUsers, joined, left }) => {
@@ -79,6 +87,11 @@ export default function ChatMain({ isBase, setIsBase }) {
                 receivedMessage(newMessage, setMessages);
             }
         );
+
+        socketRef.current.on("who-online-res", (props) => {
+            setOnlineNames(props);
+            setShowNames(true);
+        });
     }, [name]);
 
     // send message
@@ -102,21 +115,52 @@ export default function ChatMain({ isBase, setIsBase }) {
         setMessage("");
     }
 
+    function whoOnline() {
+        if (showNames) {
+            setShowNames(!showNames);
+        } else {
+            socketRef.current.emit("req-who-online");
+        }
+    }
+
     return (
         // main chat screen
-        <div className="h-full min-h-screen overflow-x-hidden transition duration-75 bg-white h-fixed dark:bg-darkModeMain">
+        <div className="h-full min-h-screen transition duration-75 bg-white h-fixed dark:bg-darkModeMain">
             {/* Header */}
-            <div className="fixed inset-x-0 top-0 grid grid-cols-3 py-2 bg-gray-100 z-500 dark:bg-darkModeHeadFoot dark:text-white dark:outline">
-                <div className="col-span-1" />
-                <div className="col-span-1 justify-self-center">
-                    <CurrentUsersData numCurrentUsers={numCurrentUsers} />
+            <div
+                className={
+                    showNames
+                        ? "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-100 filter opacity-100 backdrop-blur-xs dark:bg-darkModeHeadFoot dark:text-white dark:outline"
+                        : "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-98 filter opacity-91 backdrop-blur-xs dark:bg-darkModeHeadFoot dark:text-white dark:outline"
+                }
+            >
+                {/* Top bar */}
+                <div className="z-20 grid grid-cols-3">
+                    <div className="col-span-1 ml-3 justify-self-start">
+                        <HomeButton />
+                    </div>
+                    <div className="col-span-1 justify-self-center">
+                        <CurrentUsersData
+                            numCurrentUsers={numCurrentUsers}
+                            whoOnline={whoOnline}
+                            showNames={showNames}
+                        />
+                    </div>
+
+                    <div className="col-span-1 mr-3 justify-self-end">
+                        <ThemeToggle isBase={isBase} setIsBase={setIsBase} />
+                    </div>
                 </div>
 
-                <div className="col-span-1 mr-3 justify-self-end">
-                    <ThemeToggle isBase={isBase} setIsBase={setIsBase} />
-                </div>
+                {/* display who online */}
+                {showNames ? (
+                    <DisplayOnline onlineNames={onlineNames} />
+                ) : (
+                    <></>
+                )}
             </div>
-            {/* Middle w/ messages */}
+
+            {/* All messages */}
             <div className="p-1">
                 <Messages
                     messagesOBJ={messages}
@@ -124,6 +168,7 @@ export default function ChatMain({ isBase, setIsBase }) {
                     myName={myInfo.name}
                 />
             </div>
+
             {/* Footer */}
             <div>
                 <NewMessageForm

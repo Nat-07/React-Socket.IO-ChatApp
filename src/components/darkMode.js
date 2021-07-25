@@ -55,7 +55,7 @@ export function ThemeToggle({ isBase, setIsBase }) {
                     width="28px"
                 >
                     <defs>
-                        <style>{".icon-moon{fill:#e0e0e0; }"}</style>
+                        <style>{".icon-moon{fill:#e0e0e0;}"}</style>
                     </defs>
                     <path
                         className="icon-moon"

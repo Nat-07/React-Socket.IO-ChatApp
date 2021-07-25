@@ -10,29 +10,31 @@ export default function App() {
     const [isBase, setIsBase] = useState(true);
 
     return (
-        <BrowserRouter>
-            <div className="dark:bg-darkModeMain">
-                <Switch>
-                    {/* main page */}
-                    <Route exact path="/">
-                        <Login isBase={isBase} setIsBase={setIsBase} />
-                    </Route>
+        <main>
+            <BrowserRouter>
+                <div className="dark:bg-darkModeMain">
+                    <Switch>
+                        {/* main page */}
+                        <Route exact path="/">
+                            <Login isBase={isBase} setIsBase={setIsBase} />
+                        </Route>
 
-                    {/* chat-room */}
-                    <Route path="/chat">
-                        <ChatMain isBase={isBase} setIsBase={setIsBase} />
-                    </Route>
+                        {/* chat-room */}
+                        <Route path="/chat">
+                            <ChatMain isBase={isBase} setIsBase={setIsBase} />
+                        </Route>
 
-                    {/* about page */}
-                    <Route path="/about">
-                        <AboutInfo isBase={isBase} setIsBase={setIsBase} />
-                    </Route>
+                        {/* about page */}
+                        <Route path="/about">
+                            <AboutInfo isBase={isBase} setIsBase={setIsBase} />
+                        </Route>
 
-                    <Route path="/temp">
-                        <Error isBase={isBase} setIsBase={setIsBase} />
-                    </Route>
-                </Switch>
-            </div>
-        </BrowserRouter>
+                        <Route path="/temp">
+                            <Error isBase={isBase} setIsBase={setIsBase} />
+                        </Route>
+                    </Switch>
+                </div>
+            </BrowserRouter>
+        </main>
     );
 }

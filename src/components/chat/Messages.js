@@ -14,7 +14,7 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
     }, [messagesOBJ]);
 
     return (
-        <div className="mb-10 mt-11 ">
+        <div className={"z-0 mb-10 mt-12"}>
             {messagesOBJ.map((singleMessage, index) => {
                 // deconstruct single message in whole OBJ
                 const { name, messageText, currentTime, joined, left, isSelf } =
@@ -25,7 +25,7 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
                     return (
                         <div
                             key={index}
-                            className="flex break-words mx-3 justify-center px-2 py-1 my-0.5 text-sm text-white bg-green-400 opacity-90 rounded-lg shadow-sm"
+                            className="flex break-words mx-3 justify-center px-2 py-1 my-0.5 text-sm text-white bg-green-400 rounded-lg shadow-sm"
                         >
                             {name === myName ? (
                                 <p className="font-bold">Successfully joined</p>
@@ -44,7 +44,7 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
                     return (
                         <div
                             key={index}
-                            className="flex break-words mx-3  justify-center py-1 my-0.5 text-sm font-bold text-white bg-red-500 opacity-80 rounded-lg shadow-sm"
+                            className="flex break-words mx-3  justify-center py-1 my-0.5 text-sm font-bold text-white bg-red-500  rounded-lg shadow-sm"
                         >
                             <p className="font-bold">{name}</p>
                             <p className="font-sans subpixel-antialiased font-normal">

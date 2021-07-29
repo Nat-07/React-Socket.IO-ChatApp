@@ -1,10 +1,16 @@
 // tailwind.config.js
 module.exports = {
-    important: true,
     purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
     darkMode: "class", // or 'media' or 'class'
     theme: {
         extend: {
+            fontSize: {
+                "2xs": "0.5rem",
+            },
+
+            margin: {
+                4.5: "-1.125rem",
+            },
             // custom colors
             colors: {
                 darkModeMain: "#15294D",
@@ -79,6 +85,7 @@ module.exports = {
             ringWidth: ["disabled"],
             ringOffsetWidth: ["disabled"],
             opacity: ["dark"],
+            width: ["focus"],
         },
     },
     plugins: [],

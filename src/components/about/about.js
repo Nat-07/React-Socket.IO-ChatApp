@@ -103,7 +103,7 @@ export default function AboutInfo({ isBase, setIsBase }) {
                         <p className="font-medium dark:text-white">Info</p>
                     </div>
                     <div className="flex justify-between ml-10 mr-14">
-                        <p>Version: 1.0.0</p>
+                        <p>Version: 1.1.0</p>
                         <p>
                             Author:{" "}
                             <a

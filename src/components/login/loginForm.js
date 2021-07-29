@@ -8,8 +8,8 @@ export default function LoginForm({ name, setName }) {
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     // name or no name entered
-                    width={name ? "24px" : "25px"}
-                    height={name ? "24px" : "25px"}
+                    width="25px"
+                    height="25px"
                     viewBox="0 0 20 20"
                     className="absolute ml-3 text-gray-600 transform -translate-y-1/2 pointer-events-none top-1/2 left-3"
                     fill="currentColor"
@@ -28,7 +28,7 @@ export default function LoginForm({ name, setName }) {
                     placeholder="Username"
                     className={
                         name
-                            ? "px-2 py-1 mx-4 rounded-lg shadow-lg ring-2 ring-gray-100 form-input border pl-10  focus:outline-none "
+                            ? "px-2 py-1 mx-4 rounded-lg shadow-lg ring-2 ring-gray-100 form-input border pl-10  focus:outline-none"
                             : "px-2 py-1 mx-4 rounded-lg shadow-lg ring-2 ring-gray-300 form-input border pl-10 focus:outline-none"
                     }
                 ></input>

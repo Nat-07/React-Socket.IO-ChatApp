@@ -125,19 +125,22 @@ export default function ChatMain({ isBase, setIsBase }) {
 
     return (
         // main chat screen
-        <div className="h-full min-h-screen transition duration-75 bg-white h-fixed dark:bg-darkModeMain">
+        <div className="h-full min-h-screen transition duration-75 bg-white h-fixed dark:bg-black">
             {/* Header */}
             <div
                 className={
                     showNames
-                        ? "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-100 filter opacity-100 backdrop-blur-xs dark:bg-darkModeHeadFoot dark:text-white dark:outline"
-                        : "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-98 filter opacity-91 backdrop-blur-xs dark:bg-darkModeHeadFoot dark:text-white dark:outline"
+                        ? "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-100 filter opacity-100 backdrop-blur-xs dark:bg-gray-700 dark:text-white dark:outline"
+                        : "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-98 filter opacity-91 backdrop-blur-xs dark:bg-gray-700 dark:text-white dark:outline"
                 }
             >
                 {/* Top bar */}
                 <div className="z-20 grid grid-cols-3">
                     <div className="col-span-1 ml-3 justify-self-start">
-                        <HomeButton />
+                        {/* disconnect user */}
+                        <button onClick={() => socketRef.current.disconnect()}>
+                            <HomeButton />
+                        </button>
                     </div>
                     <div className="col-span-1 justify-self-center">
                         <CurrentUsersData

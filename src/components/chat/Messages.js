@@ -14,29 +14,23 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
     }, [messagesOBJ]);
 
     return (
-        <div className={"z-0 mb-10 mt-12"}>
+        <div className={"z-0 mb-10 mt-12 subpixel-antialiased break-words"}>
             {messagesOBJ.map((singleMessage, index) => {
                 // deconstruct single message in whole OBJ
                 const { name, messageText, currentTime, joined, left, isSelf } =
                     singleMessage;
                 // new user join
 
-                if (joined) {
+                if (joined && name !== myName) {
                     return (
                         <div
                             key={index}
-                            className="flex break-words mx-3 justify-center px-2 py-1 my-0.5 text-sm text-white bg-green-400 rounded-lg shadow-sm"
+                            className="flex break-words justify-center py-0.5 mx-16 my-0.5 text-sm text-white dark:text-gray-300 bg-green-400  dark:bg-green-700 rounded-lg shadow-sm"
                         >
-                            {name === myName ? (
-                                <p className="font-bold">Successfully joined</p>
-                            ) : (
-                                <p className="font-bold">
-                                    {name}{" "}
-                                    <span className="font-sans subpixel-antialiased font-normal">
-                                        has joined
-                                    </span>
-                                </p>
-                            )}
+                            <p className="font-bold">
+                                {name}{" "}
+                                <span className="font-normal">has joined</span>
+                            </p>
                         </div>
                     );
                     // user left
@@ -44,10 +38,10 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
                     return (
                         <div
                             key={index}
-                            className="flex break-words mx-3  justify-center py-1 my-0.5 text-sm font-bold text-white bg-red-500  rounded-lg shadow-sm"
+                            className="flex break-words justify-center py-0.5 mx-16 my-0.5 text-sm font-bold text-white dark:text-gray-300 bg-red-500  dark:bg-red-700  rounded-lg shadow-sm"
                         >
                             <p className="font-bold">{name}</p>
-                            <p className="font-sans subpixel-antialiased font-normal">
+                            <p className="font-normal ">
                                 &nbsp; has disconnected
                             </p>
                         </div>
@@ -59,13 +53,13 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
                     if (numMyMessages === localCount) {
                         return (
                             <div key={index}>
-                                <div className="flex justify-end">
-                                    <div>
-                                        <p className="px-2 break-words font-sans subpixel-antialiased ml-32 py-1.5 p-2 my-1 text-sm bg-blue-300 rounded-lg shadow-md dark:bg-blue-400">
+                                <div className="flex justify-end mt-1 mb-1.5">
+                                    <div className="pt-1 ml-32 bg-blue-300 rounded-lg shadow-md dark:bg-blue-500">
+                                        <p className="px-2 -mb-3.5 break-words font-sans  dark:text-gray-200 text-sm">
                                             {messageText}
                                         </p>
 
-                                        <p className="flex justify-end -mt-5 subpixel-antialiased font-bold text-blue-300 dark:text-blue-400">
+                                        <p className="flex justify-end -mb-2 font-bold text-blue-300 rounded-xl dark:text-blue-500 opacity-90">
                                             &lt;
                                         </p>
                                     </div>
@@ -103,34 +97,45 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
                                 </div>
                             </div>
                         );
-                    } else {
+                    } else if (messageText !== null) {
                         return (
-                            <div key={index}>
-                                <div className="flex justify-end">
-                                    <div>
-                                        <p className="px-2 break-words font-sans subpixel-antialiased ml-32 py-1.5 p-2 my-1 text-sm bg-blue-300 rounded-lg shadow-md dark:bg-blue-400">
-                                            {messageText}
-                                        </p>
+                            <div className="flex justify-end my-1" key={index}>
+                                <div className="pt-1 ml-32 bg-blue-300 rounded-lg shadow-md dark:text-gray-200 dark:bg-blue-500">
+                                    <p className="px-2 -mb-3.5 font-sans text-sm ">
+                                        {messageText}
+                                    </p>
 
-                                        <p className="flex justify-end -mt-5 subpixel-antialiased font-bold text-blue-300 dark:text-blue-400">
-                                            &lt;
-                                        </p>
-                                    </div>
+                                    <p className="flex justify-end -mb-2 font-bold text-blue-300 rounded-xl dark:text-blue-500 opacity-90">
+                                        &lt;
+                                    </p>
                                 </div>
                             </div>
                         );
+                    } else {
+                        return <div key={index}></div>;
                     }
-                } else {
+                } else if (messageText !== null) {
                     return (
-                        <div className="flex justify-start" key={index}>
-                            <div>
-                                <p className="p-2 my-1 mr-32 font-sans text-sm subpixel-antialiased break-words bg-gray-200 rounded-lg shadow-sm dark:shadow-lg dark:bg-gray-300 ">{`${currentTime}: ${name}: ${messageText}`}</p>
-                                <p className="flex justify-start -mt-5 subpixel-antialiased font-bold text-gray-200 dark:text-gray-300">
+                        <div className="flex justify-start my-1" key={index}>
+                            <div className="pt-1 pl-2 pr-1.5 mr-32 font-sans bg-gray-200 rounded-lg shadow-sm dark:shadow-lg dark:bg-gray-700 opacity-90">
+                                <p className="text-xs font-semibold dark:text-gray-400">
+                                    {name}
+                                </p>
+                                <p className="-mt-0.5 text-sm leading-tight dark:text-gray-200">
+                                    {messageText}
+                                </p>
+                                <p className="flex justify-end -mb-4 opacity-50 text-2xs dark:text-gray-400 ">
+                                    {currentTime}
+                                </p>
+
+                                <p className="-mb-2 -ml-2 font-bold text-gray-200 rounded-xl dark:text-gray-700 opacity-90">
                                     &gt;
                                 </p>
                             </div>
                         </div>
                     );
+                } else {
+                    return <div key={index}></div>;
                 }
             })}
             {/* Dummy div to scroll to */}

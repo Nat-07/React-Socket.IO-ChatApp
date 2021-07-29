@@ -7,7 +7,7 @@ const path = require("path");
 require("dotenv").config();
 
 // config
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT_SERVER || 5000;
 const io = socket(server, {
     pingInterval: process.env.PING_INTERVAL || 1000,
     pingTimeout: process.env.PING_TIMEOUT || 1000,

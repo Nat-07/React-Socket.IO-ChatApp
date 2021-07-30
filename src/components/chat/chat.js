@@ -36,16 +36,27 @@ export default function ChatMain({ isBase, setIsBase }) {
 
         // Get & save id
         socketRef.current.on("your-info", (id) => {
+            // Random color pick
+            const ranColor = Math.floor(Math.random() * 5 + 1);
+            const colorList = [
+                "text-red-500",
+                "text-blue-500",
+                "text-green-500",
+                "text-yellow-500",
+                "text-purple-500",
+            ];
+
             setMyInfo({
                 id: id,
                 name: name,
+                color: colorList[ranColor],
             });
         });
 
         // user join/leave message
         socketRef.current.on(
             "alert-enter-leave",
-            ({ name, currentUsers, joined, left }) => {
+            ({ name, currentUsers, joined, left, color }) => {
                 if (joined) {
                     const joinUserOBJ = {
                         name: name,
@@ -54,6 +65,7 @@ export default function ChatMain({ isBase, setIsBase }) {
                         joined: joined,
                         left: left,
                         isSelf: false,
+                        color: null,
                     };
                     receivedMessage(joinUserOBJ, setMessages);
                     setCurrentUsers(currentUsers);
@@ -65,6 +77,7 @@ export default function ChatMain({ isBase, setIsBase }) {
                         joined: joined,
                         left: left,
                         isSelf: false,
+                        color: null,
                     };
                     receivedMessage(leftUserOBJ, setMessages);
                     setCurrentUsers(currentUsers);
@@ -75,7 +88,7 @@ export default function ChatMain({ isBase, setIsBase }) {
         // receive new message
         socketRef.current.on(
             "new-message-FS",
-            ({ name, messageText, currentTime, joined, left }) => {
+            ({ name, messageText, currentTime, joined, left, color }) => {
                 const newMessage = {
                     name: name,
                     messageText: messageText,
@@ -83,6 +96,7 @@ export default function ChatMain({ isBase, setIsBase }) {
                     joined: joined,
                     left: left,
                     isSelf: false,
+                    color: color,
                 };
                 receivedMessage(newMessage, setMessages);
             }
@@ -104,6 +118,7 @@ export default function ChatMain({ isBase, setIsBase }) {
             joined: false,
             left: false,
             isSelf: true,
+            color: myInfo.color,
         };
 
         setNumMyMessages(numMyMessages + 1);

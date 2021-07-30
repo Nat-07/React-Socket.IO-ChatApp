@@ -17,10 +17,18 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
         <div className={"z-0 mb-10 mt-12 subpixel-antialiased break-words"}>
             {messagesOBJ.map((singleMessage, index) => {
                 // deconstruct single message in whole OBJ
-                const { name, messageText, currentTime, joined, left, isSelf } =
-                    singleMessage;
-                // new user join
 
+                const {
+                    name,
+                    messageText,
+                    currentTime,
+                    joined,
+                    left,
+                    isSelf,
+                    color,
+                } = singleMessage;
+
+                // new user join
                 if (joined && name !== myName) {
                     return (
                         <div
@@ -117,8 +125,8 @@ export default function Messages({ messagesOBJ, numMyMessages, myName }) {
                 } else if (messageText !== null) {
                     return (
                         <div className="flex justify-start my-1" key={index}>
-                            <div className="pt-1 pl-2 pr-1.5 mr-32 font-sans bg-gray-200 rounded-lg shadow-sm dark:shadow-lg dark:bg-gray-700 opacity-90">
-                                <p className="text-xs font-semibold dark:text-gray-400">
+                            <div className="pt-0.5 pl-2 pr-1.5 mr-32 font-sans bg-gray-200 rounded-lg shadow-sm dark:shadow-lg dark:bg-gray-700 opacity-90">
+                                <p className={color + " text-xs font-semibold"}>
                                     {name}
                                 </p>
                                 <p className="-mt-0.5 text-sm leading-tight dark:text-gray-200">

@@ -25,8 +25,8 @@ export default function NewMessageForm({ message, setMessage, sendMessage }) {
                 <input
                     className={
                         message
-                            ? "col-span-11  placeholder-gray-400 bg-transparent focus:outline-none dark:placeholder-gray-600 dark:text-gray-300"
-                            : "col-span-7  placeholder-gray-400 bg-transparent focus:outline-none dark:placeholder-gray-600 dark:text-gray-300"
+                            ? "col-span-11 placeholder-gray-400 bg-transparent focus:outline-none dark:placeholder-gray-600 dark:text-gray-300"
+                            : "col-span-7 placeholder-gray-400 bg-transparent focus:outline-none dark:placeholder-gray-600 dark:text-gray-300"
                     }
                     type="text"
                     placeholder="message"

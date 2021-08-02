@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { ErrorSVG } from "./svg";
-import { ThemeToggle } from "../darkMode";
+import ErrorSVG from "./Svg";
+import { ThemeToggle } from "../DarkMode";
 
 export default function Error({ isBase, setIsBase }) {
     return (

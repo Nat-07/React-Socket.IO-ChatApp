@@ -1,5 +1,5 @@
-import { ThemeToggle } from "../darkMode";
-import HomeButton from "../homeButton";
+import { ThemeToggle } from "../DarkMode";
+import HomeButton from "../HomeButton";
 
 export default function AboutInfo({ isBase, setIsBase }) {
     return (

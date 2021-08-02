@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import LoginForm from "./loginForm";
-import { ThemeToggle } from "../darkMode";
+import LoginForm from "./LoginForm";
+import { ThemeToggle } from "../DarkMode";
 
 export default function Login({ isBase, setIsBase }) {
     const [name, setName] = useState("");
@@ -15,7 +15,7 @@ export default function Login({ isBase, setIsBase }) {
 
             <div className="flex min-h-screen ">
                 <div className="relative w-11/12 m-auto text-center ">
-                    <div className="py-3 mb-56 align-middle divide-y-2 rounded-lg shadow-lg  dark:divide-gray-600 dark:divide-opacity-70 ring-2 dark:ring-opacity-0 dark:bg-gray-800 dark:shadow-2xl ring-gray-100">
+                    <div className="py-3 mb-56 align-middle divide-y-2 rounded-lg shadow-lg dark:divide-gray-600 dark:divide-opacity-70 ring-2 dark:ring-opacity-0 dark:bg-gray-800 dark:shadow-2xl ring-gray-100">
                         <div className="mx-10 mb-3">
                             <h1 className="text-lg font-medium text-center text-gray-800 dark:text-gray-300">
                                 The Chat-App

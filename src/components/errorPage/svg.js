@@ -1,4 +1,4 @@
-function ErrorSVG() {
+export default function ErrorSVG() {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -16,5 +16,3 @@ function ErrorSVG() {
         </svg>
     );
 }
-
-export { ErrorSVG };

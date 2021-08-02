@@ -1,18 +1,15 @@
 import { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import io from "socket.io-client";
+
 import NewMessageForm from "./NewMessage";
 import Messages from "./Messages";
-import { useLocation } from "react-router-dom";
-import {
-    CurrentUsersData,
-    receivedMessage,
-    currentTime,
-    DisplayOnline,
-} from "./helper";
-import { ThemeToggle } from "../darkMode";
-import HomeButton from "../homeButton";
+import { receivedMessage, currentTime } from "./Helper";
+import { ThemeToggle } from "../DarkMode";
+import HomeButton from "../HomeButton";
+import { CurrentUsersData, DisplayOnline } from "./CurrentUsers";
 
-export default function ChatMain({ isBase, setIsBase }) {
+export default function Chat({ isBase, setIsBase }) {
     //  data
     const [myInfo, setMyInfo] = useState({});
     const [messages, setMessages] = useState([]);
@@ -37,19 +34,22 @@ export default function ChatMain({ isBase, setIsBase }) {
         // Get & save id
         socketRef.current.on("your-info", (id) => {
             // Random color pick
-            const ranColor = Math.floor(Math.random() * 5 + 1);
+            const ranNum = Math.floor(Math.random() * 6 + 1);
+
             const colorList = [
                 "text-red-500",
                 "text-blue-500",
                 "text-green-500",
                 "text-yellow-500",
                 "text-purple-500",
+                "text-pink-500",
+                "text-indigo-500",
             ];
 
             setMyInfo({
                 id: id,
                 name: name,
-                color: colorList[ranColor],
+                color: colorList[ranNum],
             });
         });
 
@@ -142,15 +142,9 @@ export default function ChatMain({ isBase, setIsBase }) {
         // main chat screen
         <div className="h-full min-h-screen transition duration-75 bg-white h-fixed dark:bg-black">
             {/* Header */}
-            <div
-                className={
-                    showNames
-                        ? "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-100 filter opacity-100 backdrop-blur-xs dark:bg-gray-700 dark:text-white dark:outline"
-                        : "fixed inset-x-0 top-0 z-10 py-2 bg-gray-100 rounded-b-lg backdrop-filter dark:filter dark:opacity-98 filter opacity-91 backdrop-blur-xs dark:bg-gray-700 dark:text-white dark:outline"
-                }
-            >
+            <div className="fixed inset-x-0 top-0 z-10 py-2 bg-gray-200 rounded-b-lg backdrop-filter backdrop-blur-md ring-gray-300 dark:bg-opacity-20 bg-opacity-20 ring-1 dark:bg-gray-800 dark:text-white ">
                 {/* Top bar */}
-                <div className="z-20 grid grid-cols-3">
+                <div className="grid grid-cols-3">
                     <div className="col-span-1 ml-3 justify-self-start">
                         {/* disconnect user */}
                         <button onClick={() => socketRef.current.disconnect()}>
@@ -165,12 +159,13 @@ export default function ChatMain({ isBase, setIsBase }) {
                         />
                     </div>
 
+                    {/* dark/light toggle */}
                     <div className="col-span-1 mr-3 justify-self-end">
                         <ThemeToggle isBase={isBase} setIsBase={setIsBase} />
                     </div>
                 </div>
 
-                {/* display who online */}
+                {/* show who online */}
                 {showNames ? (
                     <DisplayOnline onlineNames={onlineNames} />
                 ) : (
@@ -179,22 +174,18 @@ export default function ChatMain({ isBase, setIsBase }) {
             </div>
 
             {/* All messages */}
-            <div className="p-1">
-                <Messages
-                    messagesOBJ={messages}
-                    numMyMessages={numMyMessages}
-                    myName={myInfo.name}
-                />
-            </div>
+            <Messages
+                messagesOBJ={messages}
+                numMyMessages={numMyMessages}
+                myName={myInfo.name}
+            />
 
             {/* Footer */}
-            <div>
-                <NewMessageForm
-                    setMessage={setMessage}
-                    message={message}
-                    sendMessage={sendMessage}
-                />
-            </div>
+            <NewMessageForm
+                setMessage={setMessage}
+                message={message}
+                sendMessage={sendMessage}
+            />
         </div>
     );
 }

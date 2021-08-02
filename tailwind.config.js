@@ -17,10 +17,21 @@ module.exports = {
                 darkModeHeadFoot: "#355069",
                 divideLine: "#27435c",
             },
+            blur: {
+                xs: "2px",
+            },
 
             opacity: {
                 91: ".91",
                 99: ".99",
+            },
+
+            backgroundColor: {
+                darkMessage: "#26252A",
+            },
+
+            textColor: {
+                darkMessage: "#26252A",
             },
 
             // https://devdojo.com/tnylea/custom-animations-in-tailwindcss

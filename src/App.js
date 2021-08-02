@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import ChatMain from "./components/chat/chat";
-import Login from "./components/login/login";
-import AboutInfo from "./components/about/about";
-import Error from "./components/errorPage/errorPage";
+import Chat from "./components/chat/Chat";
+import Login from "./components/login/Login";
+import AboutInfo from "./components/about/About";
+import Error from "./components/errorPage/ErrorPage";
 
 export default function App() {
     const [isBase, setIsBase] = useState(true);
@@ -21,7 +21,7 @@ export default function App() {
 
                         {/* chat-room */}
                         <Route path="/chat">
-                            <ChatMain isBase={isBase} setIsBase={setIsBase} />
+                            <Chat isBase={isBase} setIsBase={setIsBase} />
                         </Route>
 
                         {/* about page */}

@@ -1,7 +1,7 @@
 export default function NewMessageForm({ message, setMessage, sendMessage }) {
     return (
         // form send message
-        <div className="fixed inset-x-0 bottom-0 w-full pt-1 rounded-t-lg backdrop-filter backdrop-blur-xs ring-gray-300 ring-2 dark:bg-black">
+        <div className="fixed inset-x-0 bottom-0 w-full pt-1 rounded-t-lg backdrop-filter backdrop-blur-xs ring-gray-300 ring-2">
             <form
                 className="flex justify-center mb-1"
                 onSubmit={(e) => {
